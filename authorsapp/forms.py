@@ -14,8 +14,7 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Введите имя'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Введите фамилию'}))
+    full_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Введите имя и фимилию'}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Введите имя пользователя'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'class':'form-control py-4', 'placeholder':'Введите адрес эл. почты'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control py-4', 'placeholder':'Введите пароль'}))
@@ -26,8 +25,7 @@ class UserRegistrationForm(UserCreationForm):
         fields = ('full_name', 'username','email', 'password1', 'password2')
 
 class UserProfileForm(UserChangeForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4'}))
+    full_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4'}))
     image = forms.ImageField(widget=forms.FileInput(attrs={'class':'custom-file-label'}), required=False)
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'readonly':True}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'class':'form-control py-4', 'readonly':True}))

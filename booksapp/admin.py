@@ -5,7 +5,7 @@ from booksapp.models import Book, Comment
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    fields = ['product', 'dollar_amount']
+    
     list_display = ('name', 'get_authors', 'commentsnum')
 
     def get_authors(self, obj):

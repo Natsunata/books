@@ -1,0 +1,145 @@
+{% extends 'booksapp/base.html' %}
+{% load static cache humanize %}
+
+
+{% block css %}
+    <link href="{% static 'vendor/css/products.css' %}" rel="stylesheet">
+{% endblock css %}
+
+
+{% block content %}
+    <!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">Authors</h1>
+            
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            
+
+            
+                        <div class="row">
+                            {% cache 30  object_list %}
+                <div class="row">
+                {% if author.image %}
+
+                     {{ author.image.url }}
+
+                     {% else %}
+
+                     {% static 'vendor/img/users/default_avatar.jpg' %}
+                        
+                     {% endif %}
+                
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">{{ author.full_name }}</a>
+                            </h4>
+                            
+                        </div>
+                            {% for book in object_list %}
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <a href="#">
+                                        {% if book.image %}
+            
+                                         <img class="card-img-top"
+                                             src="{{ book.image.url }}"
+                                             alt="">
+                                    
+            
+                                        {% else %}
+            
+                                        <img class="card-img-top"
+                                             src="{% static 'vendor/img/users/default_avatar.jpg' %}"
+                                             alt="">
+                                    
+                                        {% endif %}
+                                    </a>
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <a href="#">{{ book.name }}</a>
+                                        </h4>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+            
+                            {% endfor %}
+                            {% endcache %}
+                            
+                                
+                        </div>
+                    </div>
+                </div>
+
+                
+                    
+            </div>
+
+
+            
+            {% if is_paginated %}
+                
+            
+                
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item 
+                    {% if not page_obj.has_previous %}
+                        disabled
+                    {% endif %}
+                         ">
+                        <a class="page-link" href="
+                        {% if page_obj.has_previous %}
+                            {% url 'products:paginator' page_obj.previous_page_number %}
+                        {% else %}
+                            #
+                        {% endif %}
+                            " tabindex="-1" aria-disabled="true">Предыдущая</a>
+                    </li>
+                    
+                    {% for page in paginator.page_range %}
+                        <li class="page-item"><a class="page-link" href="{% url 'products:paginator' page %}">{{ page }}</a></li>
+                    {% endfor %}
+                    <li class="page-item {% if not page_obj.has_next %}
+                    disabled
+                {% endif %}">
+                        <a class="page-link" href="{% if page_obj.has_next %}
+                        {% url 'products:paginator' page_obj.next_page_number %}
+                    {% else %}
+                        #
+                    {% endif %}">Следующая</a>
+                    </li>
+                </ul>
+            </nav>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+{% endblock content %}
+
+
+{% block footer %}
+    <!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Books 2023</p>
+    </div>
+    <!-- /.container -->
+</footer>
+{% endblock footer %}
